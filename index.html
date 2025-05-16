@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Professional Landing Page</title>
+
+  <style>
+    /* Set up some basic color and font variables for easy customization */
+    :root {
+      --primary-color: #0072ff;
+      --secondary-color: #00c6ff;
+      --nav-bg: #ffffffee;
+      --nav-hover: #4021bc;
+      --text-dark: #333;
+      --text-light: #fff;
+      --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      --card-bg: #f9f9f9;
+      --card-shadow: rgba(0, 0, 0, 0.1);
+      --hover-shadow: rgba(0, 0, 0, 0.2);
+    }
+
+    /* Reset default margins and paddings */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      scroll-behavior: smooth; /* smooth scrolling for anchor links */
+      background: #f0f4f8;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 15px 40px;
+      background-color: transparent;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .navbar.scrolled {
+      background-color: var(--nav-bg);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Logo styling */
+    .navbar .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    /* Navigation links layout */
+    .nav-links {
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 600;
+      position: relative;
+      transition: color 0.3s, transform 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--nav-hover);
+      transform: translateY(-3px);
+    }
+
+    /* Hamburger Menu (Mobile) */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: var(--text-dark);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background-color: var(--nav-bg);
+        flex-direction: column;
+        width: 200px;
+        padding: 20px;
+        display: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+      background-size: 200% 200%;
+      animation: gradientAnimation 5s ease infinite alternate, fadeInUp 1s forwards 1s;
+      color: var(--text-light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      100% {
+        background-position: 100% 50%;
+      }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+    }
+
+    /* Icons Section */
+    .icons-container {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      margin-top: 40px;
+    }
+
+    .icon-box {
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 40px;
+      border-radius: 50%;
+      background-color: var(--card-bg);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+
+    .icon-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .icon-box i {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .icon-box h3 {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+    }
+
+    /* Features Section */
+    .section {
+      padding: 42px 40px;
+      max-width: 1100px;
+      margin: auto;
+      background-color: var(--card-bg);
+      box-shadow: 0 2px 10px var(--card-shadow);
+      border-radius: 8px;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeInUp 1s forwards 2s;
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .section p {
+      color: var(--text-dark);
+      font-size: 1rem;
+      line-height: 1.6;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .feature-item {
+      text-align: center;
+      padding: 30px;
+      border-radius: 8px;
+      background-color: white;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-item i {
+      font-size: 2.5rem;
+      color: var(--secondary-color);
+      margin-bottom: 15px;
+    }
+
+    .feature-item h3 {
+      color: var(--primary-color);
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+    }
+
+    .feature-details {
+      margin-top: 15px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .read-more-btn, .read-less-btn {
+      background: none;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      padding: 8px 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .read-more-btn:hover, .read-less-btn:hover {
+      background-color: var(--primary-color);
+      color: var(--text-light);
+    }
+
+    /* About Section */
+    .team-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .team-member {
+      width: 200px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      position: relative;
+    }
+
+    .team-member img {
+      width: 100%;
+      display: block;
+    }
+
+    .team-member h3, .team-member p {
+      text-align: center;
+      padding: 10px;
+      background-color: var(--card-bg);
+    }
+
+    .team-member .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: var(--text-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .team-member:hover .overlay {
+      opacity: 1;
+    }
+
+    .team-member .overlay a {
+      color: var(--text-light);
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .team-member .overlay p {
+      text-align: center;
+      padding: 0 20px;
+      font-size: 0.9rem;
+    }
+
+    /* Contact Section */
+    .contact-form {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: var(--text-dark);
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: var(--font-main);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+    }
+
+    .submit-btn {
+      background-color: var(--primary-color);
+      color: var(--text-light);
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      background-color: var(--nav-hover);
+    }
+
+    /* Footer */
+    footer {
+      background-color: #f1f1f1;
+      text-align: center;
+      padding: 30px;
+      color: #777;
+    }
+
+    footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+  </style>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="logo">BlueOrbit</div>
+    <div class="nav-links" id="nav-links">
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="hamburger" id="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </nav>
+
+  <section class="hero" id="home">
+    <div>
+      <h1>Build a Better Web Experience</h1>
+      <p>Modern, professional, and mobile-friendly landing page that grows with your brand.</p>
+    </div><br><br>
+    <section class="icons-container">
+      <div class="icon-box">
+        <i class="fas fa-code"></i>
+        <h3>Web Development</h3>
+      </div>
+      <div class="icon-box">
+        <i class="fas fa-paint-brush"></i>
+        <h3>Creative Design</h3>
+      </div>
+      <div class="icon-box">
+        <i class="fas fa-cogs"></i>
+        <h3>Support & Maintenance</h3>
+      </div><br>
+    </section>
+    <a href="#features" class="button">Learn More</a>
+  </section><br>
+
+  <section class="section" id="features">
+    <h2>Key Features</h2>
+    <p>Explore the powerful features designed to elevate your web experience.</p>
+    <div class="features-grid">
+      <div class="feature-item">
+        <i class="fas fa-rocket"></i>
+        <h3>Blazing Fast Performance</h3>
+        <p>Experience lightning-fast loading times and smooth user interactions.</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-mobile-alt"></i>
+        <h3>Fully Responsive Design</h3>
+        <p>Your website will look stunning and function flawlessly on any device.</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-palette"></i>
+        <h3>Intuitive Interface</h3>
+        <p>Enjoy a clean and user-friendly interface that's easy to navigate.</p>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-shield-alt"></i>
+        <h3>Enhanced Security</h3>
+        <p>Benefit from robust security measures to protect your data and users.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <h2>Our Team</h2>
+    <p>Meet the passionate individuals behind BlueOrbit.</p>
+    <div class="team-container">
+      <div class="team-member">
+        
+        <h3>John Doe</h3>
+        <p>Lead Developer</p>
+        <div class="overlay">
+          <p>Experienced in full-stack development and innovative solutions.</p>
+        </div>
+      </div>
+
+      <div class="team-member">
+        
+        <h3>Jane Smith</h3>
+        <p>Creative Designer</p>
+        <div class="overlay">
+          <p>Passionate about crafting beautiful and user-centric designs.</p>
+        </div>
+      </div>
+
+      <div class="team-member">
+        
+        <h3>Peter Jones</h3>
+        <p>Support Specialist</p>
+        <div class="overlay">
+          <p>Always ready to assist with any queries or technical issues.</p>
+          </div>
+          </div>
+          </div>
+          </section>
+
+          <section class="section" id="contact">
+            <h2>Contact Us</h2>
+            <p>Have a question or want to work with us? Drop us a line!</p>
+            <form class="contact-form">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Your Name" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Your Email" required>
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+              </div>
+              <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+          </section>
+        
+          <footer>
+            <p>&copy; 2025 BlueOrbit. All rights reserved. </p>
+          </footer>
+        
+          <script>
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+              const navbar = document.getElementById('navbar');
+              navbar.classList.toggle('scrolled', window.scrollY > 50);
+            });
+        
+            // Hamburger menu toggle
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('nav-links');
+        
+            hamburger.addEventListener('click', () => {
+              navLinks.classList.toggle('active');
+            });
+          </script>
+        </body>
+        </html>
